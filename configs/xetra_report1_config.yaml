@@ -1,0 +1,50 @@
+# s3 specific configurations
+s3:
+  src_endpoint_url: "https://s3.amazon.com"
+  src_bucket: "xetra-1234"
+  trg_bucket: "xetra-etl-output"
+
+# configuration specific to the source
+source:
+  src_first_extract_date: "2022-12-30"
+  src_columns: ['ISIN', 'Mnemonic', 'Date', 'Time', 'StartPrice', 'EndPrice', 'MinPrice', 'MaxPrice', 'TradedVolume']
+  src_col_date: 'Date'
+  src_col_isin: 'ISIN'
+  src_col_time: 'Time'
+  src_col_min_price: 'MinPrice'
+  src_col_start_price: 'StartPrice'
+  src_col_max_price: 'MaxPrice'
+  src_col_traded_vol: 'TradedVolume'
+
+# configuration specific to the source
+target:
+  trg_key: "xetra_reports/xetra_daily_report"
+  trg_key_date_format: '%Y%m%d_%H%M%S'
+  trg_format: 'parquet'
+  trg_col_isin: 'isin'
+  trg_col_date: 'date'
+  trg_col_op_price: 'opening_price_eur'
+  trg_col_clos_price: 'closing_price_eur'
+  trg_col_min_price: 'minimum_price_eur'
+  trg_col_max_price: 'maximum_price_eur'
+  trg_col_dail_trad_vol: 'daily_traded_volume'
+  trg_col_ch_prev_clos: 'change_prev_closing_%'
+
+# configuration specific to the meta file
+meta:
+  meta_key: 'meta_file.csv'
+
+# Logging configuration
+logging:
+  version: 1
+  formatters:
+    xetra:
+      format: "Xetra Transformer - %(asctime)s - %(levelname)s - %(message)s"
+  handlers:
+    console:
+      class: logging.StreamHandler
+      formatter: xetra
+      level: DEBUG
+  root:
+    level: DEBUG
+    handlers: [ console ]

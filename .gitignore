@@ -1,0 +1,6 @@
+.venv/
+.env
+data_source/
+**/__pycache__
+**.ipynb
+.coverage
